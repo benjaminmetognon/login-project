@@ -42,10 +42,10 @@ if (isset($_POST['username']) && isset($_POST['password']) && isset($_POST['re_p
         header("Location: signup.php?error=Le mot de passe de confirmation ne correspond pas&$user_data");
         exit();
     } else {
-        // Hashing the password
+        // Hachage du mot de passe
         $pass = md5($pass);
 
-        // Check if username already exists
+        // Vérifiez si le nom d'utilisateur existe déjà
         $sql = "SELECT * FROM utilisateur WHERE username=?";
         $stmt = mysqli_prepare($conn, $sql);
         mysqli_stmt_bind_param($stmt, "s", $uname);
@@ -56,7 +56,7 @@ if (isset($_POST['username']) && isset($_POST['password']) && isset($_POST['re_p
             header("Location: signup.php?error=Le nom d'utilisateur est déjà pris. Essaie un autre&$user_data");
             exit();
         } else {
-            // Insert user data into the database
+            // Insérer les données utilisateur dans la base de données
             $sql2 = "INSERT INTO utilisateur (username, password) VALUES (?, ?)";
             $stmt2 = mysqli_prepare($conn, $sql2);
             mysqli_stmt_bind_param($stmt2, "ss", $uname, $pass);
